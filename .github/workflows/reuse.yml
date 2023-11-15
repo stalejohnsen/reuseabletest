@@ -21,5 +21,10 @@ jobs:
     - name: Dump Password
       run: |
         echo Password is $PASSWORD
+        if [[ $PASSWORD == *"prod-password"* ]]; then
+          echo "This is the UAT password!"
+        else
+          echo "This is NOT the UAT password!"
+        fi
       env:
         PASSWORD: ${{ secrets.PASSWORD }}
