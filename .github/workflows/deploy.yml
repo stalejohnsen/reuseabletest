@@ -9,8 +9,6 @@ jobs:
     uses: ./.github/workflows/reuse.yml
     with:
       environment: dev
-    secrets:
-      PASSWORD: ${{ secrets.PASSWORD }}
       
   deploy_prod:
     name: Deploy to Prod
@@ -18,5 +16,3 @@ jobs:
     uses: ./.github/workflows/reuse.yml
     with:
       environment: prod
-    secrets:
-      PASSWORD: ${{ secrets.PASSWORD }}
