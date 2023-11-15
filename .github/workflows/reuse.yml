@@ -11,6 +11,11 @@ on:
       PASSWORD:
         required: true
 
+permissions:
+    id-token: write
+    contents: read
+    pull-requests: write
+    
 jobs:
   deploy:
     name: Deploy to ${{ inputs.environment }}
