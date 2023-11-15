@@ -7,16 +7,15 @@ permissions:
   id-token: write
   contents: read
 
-jobs: 
-  deploy_prod:
-    name: Deploy to Prod
-    needs: deploy_dev
-    uses: ./.github/workflows/reuse.yml
-    with:
-      environment: prod
-
+jobs:
   deploy_dev:
     name: Deploy to Dev
     uses: ./.github/workflows/reuse.yml
     with:
       environment: dev
+      
+  deploy_prod:
+    name: Deploy to Prod
+    uses: ./.github/workflows/reuse.yml
+    with:
+      environment: prod
