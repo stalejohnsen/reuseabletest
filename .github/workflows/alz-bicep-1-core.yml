@@ -94,12 +94,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          Remove-Item .gitignore -Verbose -Force
-          $branchName = "automated-pr-$(Get-Date -Format yyyy-MM-dd-HH-mm)"
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git checkout -b $branchName
-          git add .
-          git commit -m "Canary commit"
-          git push --set-upstream origin $branchName
-          gh pr create -B main -H $branchName --title "PR for canary commit"
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+          gh pr create --title "Automated PR" --body "This is an automated PR." --base main --head $(git rev-parse --abbrev-ref HEAD) --repo ${{ github.repository }} --confirm
