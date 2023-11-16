@@ -1,0 +1,17 @@
+name: Azure Landing Zone Continuous Delivery
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:  
+  deploy_prod:
+    if: 
+    name: Deploy to Prod
+    uses: ./.github/workflows/reuse.yml
+    with:
+      environment: prod
