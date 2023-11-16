@@ -42,6 +42,9 @@ jobs:
       - name: Import Environment Variables from File
         run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
 
+      - name: Is PR
+        run: echo ${{ env.IS_PULL_REQUEST }}
+
       - name: OIDC Login to Tenant
         uses: azure/login@v1
         with:
@@ -84,3 +87,19 @@ jobs:
           inlineScript: |
             .\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
           azPSVersion: "latest"
+
+      - name: Create PR
+        shell: pwsh
+        if: inputs.environment == 'canary'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          Remove-Item .gitignore -Verbose -Force
+          $branchName = "automated-pr-$(Get-Date -Format yyyy-MM-dd-HH-mm)"
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git checkout -b $branchName
+          git add .
+          git commit -m "Canary commit"
+          git push --set-upstream origin $branchName
+          gh pr create -B main -H $branchName --title "PR for canary commit"
