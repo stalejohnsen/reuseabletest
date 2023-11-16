@@ -1,72 +1,51 @@
 name: ALZ-Bicep-1-Core
-
 on:
-  workflow_call:
-    inputs:
-      environment:
-        type: string
-        description: environment to deploy to
-        required: true
+  push:
+    paths:
+      - "config/custom-parameters/managementGroups.parameters.all.json"
+      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
+      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "config/custom-parameters/managementGroups.parameters.all.json"
+      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
+      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+  workflow_dispatch:  
 
 permissions:
   id-token: write
   contents: read
 
-env:
-  ENV_FILE: ".env"
-  IS_PULL_REQUEST: ${{ (inputs.environment == 'dev') || (inputs.environment == 'canary-preflight') }}
-  AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-  TOP_LEVEL_MG_PREFIX: ${{ vars.TOP_LEVEL_MG_PREFIX }}
-  TOP_LEVEL_MG_DISPLAYNAME: ${{ vars.TOP_LEVEL_MG_DISPLAYNAME }}
+jobs:  
+  alz-bicep-1-core_preflight:
+    name: ALZ-Bicep-1-Core - Preflight
+    if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
+    uses: ./.github/workflows/reuse-core.yml
+    with:
+      environment: canary-preflight
 
-jobs:
-  ALZ_Bicep_1_Core:
-    name: Deploy to ${{ inputs.environment }}
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  alz-bicep-1-core_canary:
+    name: ALZ-Bicep-1-Core - ALZ Canary
+    if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
+    needs: alz-bicep-1-core_preflight
+    uses: ./.github/workflows/reuse-core.yml
+    with:
+      environment: canary
 
-      - name: "Remove Quotation Marks from Environment File"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            Write-Host $ENV_FILE
-            (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
-          azPSVersion: "latest"
+  deploy_preflight:
+    if: github.event_name == 'pull_request'
+    name: Preflight validation
+    needs: alz-bicep-1-core_canary
+    uses: ./.github/workflows/reuse-core.yml
+    with:
+      environment: dev
 
-      - name: Import Environment Variables from File
-        run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
-
-      - name: OIDC Login to Tenant
-        uses: azure/login@v1
-        with:
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-          enable-AzPSSession: true    
-
-      - name: "Management Groups Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZManagementGroups.ps1
-          azPSVersion: "latest"
-
-      - name: "Custom Policy Definitions Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZCustomPolicyDefinitions.ps1
-          azPSVersion: "latest"
-
-      - name: "Custom Role Definitions Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
-          azPSVersion: "latest"
+  deploy_prod:
+    name: Deploy to ALZ live
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: deploy_preflight
+    uses: ./.github/workflows/reuse-core.yml
+    with:
+      environment: prod
