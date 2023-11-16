@@ -35,6 +35,6 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          $WhatIfEnabled = [System.Convert]::ToBoolean($($env:WHAT_IF))
+          [Boolean]$WhatIfEnabled = [System.Convert]::ToBoolean($($env:WHAT_IF))
           New-AzResourceGroup -Name mytestrg -Location "westeurope" -WhatIf $WhatIfEnabled
         azPSVersion: "latest"
