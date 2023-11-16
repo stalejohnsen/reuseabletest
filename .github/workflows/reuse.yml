@@ -19,22 +19,29 @@ jobs:
     environment: ${{ inputs.environment }}
     
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Set up environment variable
-      run: echo "WHAT_IF=${{ inputs.environment == 'dev' }}" >> $GITHUB_ENV
+      - name: "Remove Quotation Marks from Environment File"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Write-Host $ENV_FILE
+            (Get-Content -Path $env:ENV_FILE -Encoding UTF8) | ForEach-Object {$_ -replace '"',''} | Out-File -FilePath $env:ENV_FILE -Encoding UTF8
+          azPSVersion: "latest"
 
-    - name: OIDC Login to Tenant
-      uses: azure/login@v1
-      with:
-        client-id: ${{ vars.AZURE_CLIENT_ID }}
-        tenant-id: ${{ vars.AZURE_TENANT_ID }}
-        subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-        enable-AzPSSession: true 
+      - name: Import Environment Variables from File
+        run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
 
-    - name: Deploy Azure Resource Group
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          [Boolean]$WhatIfEnabled = [System.Convert]::ToBoolean($($env:WHAT_IF))
-          New-AzResourceGroup -Name mytestrg -Location "westeurope" -WhatIf $WhatIfEnabled
-        azPSVersion: "latest"
+      - name: Set up environment variable
+        run: echo "WHAT_IF=${{ inputs.environment == 'dev' }}" >> $GITHUB_ENV
+
+      - name: OIDC Login to Tenant
+        uses: azure/login@v1
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true 
