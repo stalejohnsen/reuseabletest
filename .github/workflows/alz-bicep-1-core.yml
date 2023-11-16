@@ -14,7 +14,7 @@ permissions:
 
 env:
   ENV_FILE: ".env"
-  IS_PULL_REQUEST: ${{ (inputs.environment == 'dev') }}
+  IS_PULL_REQUEST: ${{ (github.event_name == 'pull_request') }}
   AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
   TOP_LEVEL_MG_PREFIX: ${{ vars.TOP_LEVEL_MG_PREFIX }}
   TOP_LEVEL_MG_DISPLAYNAME: ${{ vars.TOP_LEVEL_MG_DISPLAYNAME }}
@@ -49,6 +49,20 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true 
+
+      - name: Run github/super-linter
+        if: ${{ env.IS_PULL_REQUEST == 'true'}}
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_JSON: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_POWERSHELL: true
+          VALIDATE_YAML: true
+          VALIDATE_EDITORCONFIG: true
+          FILTER_REGEX_EXCLUDE: ".*generateddocs/.*.bicep.md"     
 
       - name: "Management Groups Deployment"
         uses: azure/powershell@v1
