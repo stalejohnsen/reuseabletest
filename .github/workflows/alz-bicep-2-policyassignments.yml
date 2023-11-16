@@ -1,17 +1,13 @@
-name: ALZ-Bicep-1-Core
+name: ALZ-Bicep-2-PolicyAssignments
 on:
   push:
     paths:
-      - "config/custom-parameters/managementGroups.parameters.all.json"
-      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
-      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+      - alzDefaultPolicyAssignments.parameters.all.json
   pull_request:
     branches:
       - "main"
     paths:
-      - "config/custom-parameters/managementGroups.parameters.all.json"
-      - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
-      - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
+      - alzDefaultPolicyAssignments.parameters.all.json
   workflow_dispatch:  
 
 permissions:
