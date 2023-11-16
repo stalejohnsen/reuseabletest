@@ -22,7 +22,7 @@ jobs:
       environment: dev
 
   deploy_canary:
-    if: (!github.event_name == 'pull_request')
+    if: github.event_name != 'pull_request'
     name: Deploy Canary
     needs: deploy_preflight
     uses: ./.github/workflows/reuse.yml
