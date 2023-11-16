@@ -1,4 +1,4 @@
-name: ALZ-Bicep-1-Core
+name: reuse-core
 
 on:
   workflow_call:

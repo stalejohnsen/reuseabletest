@@ -1,4 +1,4 @@
-name: ALZ-Bicep-2-PolicyAssignments
+name: reuse-policyassignments
 
 on:
   workflow_call:
