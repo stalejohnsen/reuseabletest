@@ -1,0 +1,30 @@
+name: Azure Landing Zone Live
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy_preflight:
+    if: github.event_name == 'pull_request'
+    name: Preflight validation
+    uses: ./.github/workflows/alz-bicep-1-core.yml
+    with:
+      environment: dev
+
+  deploy_prod:
+    name: Deploy to ALZ live
+    needs: deploy_preflight
+    uses: ./.github/workflows/alz-bicep-1-core.yml
+    with:
+      environment: prod

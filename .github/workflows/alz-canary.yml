@@ -1,0 +1,24 @@
+name: Azure Landing Zone Canary
+on:
+  push:
+    branches-ignore:
+      - main
+  workflow_dispatch:  
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:  
+  deploy_preflight:
+    name: Preflight validation
+    uses: ./.github/workflows/alz-bicep-1-core.yml
+    with:
+      environment: canary-preflight
+
+  deploy_canary:
+    name: Deploy to ALZ Canary
+    needs: deploy_preflight
+    uses: ./.github/workflows/alz-bicep-1-core.yml
+    with:
+      environment: canary
