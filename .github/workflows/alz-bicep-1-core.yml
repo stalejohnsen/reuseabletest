@@ -37,7 +37,6 @@ jobs:
   deploy_preflight:
     if: github.event_name == 'pull_request'
     name: Preflight validation
-    needs: alz-bicep-1-core_canary
     uses: ./.github/workflows/reuse-core.yml
     with:
       environment: dev
