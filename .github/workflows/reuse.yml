@@ -15,6 +15,7 @@ permissions:
 env:
   ENV_FILE: ".env"
   IS_PULL_REQUEST: ${{ (inputs.environment == 'dev') }}
+  AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
 jobs:
   deploy:
