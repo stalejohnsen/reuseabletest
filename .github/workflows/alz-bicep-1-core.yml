@@ -1,4 +1,4 @@
-name: Called Workflow
+name: ALZ-Bicep-1-Core
 
 on:
   workflow_call:
@@ -14,7 +14,7 @@ permissions:
 
 env:
   ENV_FILE: ".env"
-  IS_PULL_REQUEST: ${{ (github.event_name == 'pull_request') }}
+  IS_PULL_REQUEST: ${{ (inputs.environment == 'dev') || (inputs.environment == 'canary-preflight') }}
   AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
   TOP_LEVEL_MG_PREFIX: ${{ vars.TOP_LEVEL_MG_PREFIX }}
   TOP_LEVEL_MG_DISPLAYNAME: ${{ vars.TOP_LEVEL_MG_DISPLAYNAME }}

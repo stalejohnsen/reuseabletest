@@ -1,30 +1,24 @@
-name: Azure Landing Zone Continuous Integration
+name: Azure Landing Zone Canary
 on:
   push:
     branches-ignore:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
-
+  workflow_dispatch:  
 
 permissions:
   id-token: write
   contents: read
-  pull-requests: write
 
-jobs:
+jobs:  
   deploy_preflight:
-    if: github.event_name == 'pull_request'
     name: Deploy preflight
     uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
-      environment: dev
+      environment: canary-preflight
 
   deploy_canary:
-    if: github.event_name != 'pull_request'
-    name: Deploy Canary
+    name: Deploy to Canary
+    needs: deploy_preflight
     uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
       environment: canary
