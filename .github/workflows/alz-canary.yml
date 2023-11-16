@@ -11,27 +11,28 @@ permissions:
 
 jobs:  
   alz-bicep-1-core_preflight:
-    name: ALZ-Bicep-1-Core - Preflight validation
+    name: ALZ-Bicep-1-Core - Preflight
     uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
       environment: canary-preflight
 
   alz-bicep-1-core_canary:
-    name: ALZ-Bicep-1-Core - Deploy to ALZ Canary
+    name: ALZ-Bicep-1-Core - ALZ Canary
     needs: alz-bicep-1-core_preflight
     uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
       environment: canary
 
   alz-bicep-2-policyassignments_preflight:
-    name: ALZ-Bicep-2-PolicyAssignments - Preflight validation
+    name: ALZ-Bicep-2-PolicyAssignments - Preflight
+    needs: alz-bicep-1-core_canary
     uses: ./.github/workflows/alz-bicep-2-policyassignments.yml
     with:
       environment: canary-preflight
 
   alz-bicep-2-policyassignments_canary:
-    name: ALZ-Bicep-2-PolicyAssignments - Deploy to ALZ Canary
-    needs: alz-bicep-1-core_preflight
+    name: ALZ-Bicep-2-PolicyAssignments - ALZ Canary
+    needs: alz-bicep-2-policyassignments_preflight
     uses: ./.github/workflows/alz-bicep-2-policyassignments.yml
     with:
       environment: canary  

@@ -17,14 +17,14 @@ param (
 
 # Parameters necessary for deployment
 $inputObject = @{
-  DeploymentName             = 'alz-PolicyAssignmentsDeployment-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
-  Location                   = $Location
-  ManagementGroupId          = $TopLevelMGPrefix
-  TemplateFile               = $TemplateFile
-  TemplateParameterFile      = $TemplateParameterFile
-  parTargetManagementGroupId = "$($env:TOP_LEVEL_MG_PREFIX)"
-  WhatIf                     = $WhatIfEnabled
-  Verbose                    = $true
+  DeploymentName                   = 'alz-PolicyAssignmentsDeployment-{0}' -f ( -join (Get-Date -Format 'yyyyMMddTHHMMssffffZ')[0..63])
+  Location                         = $Location
+  ManagementGroupId                = $TopLevelMGPrefix
+  TemplateFile                     = $TemplateFile
+  TemplateParameterFile            = $TemplateParameterFile
+  parTopLevelManagementGroupPrefix = $TopLevelMGPrefix
+  WhatIf                           = $WhatIfEnabled
+  Verbose                          = $true
 }
 
 New-AzManagementGroupDeployment @inputObject
