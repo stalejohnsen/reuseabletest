@@ -44,7 +44,6 @@ jobs:
   deploy_prod:
     name: Deploy to ALZ live
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: deploy_preflight
     uses: ./.github/workflows/reuse-core.yml
     with:
       environment: prod
