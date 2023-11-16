@@ -51,7 +51,7 @@ jobs:
           enable-AzPSSession: true 
 
       - name: Run github/super-linter
-        if: ${{ env.IS_PULL_REQUEST == 'true'}}
+        if: env.IS_PULL_REQUEST == 'true'
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
