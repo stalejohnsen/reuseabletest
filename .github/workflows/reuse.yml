@@ -14,6 +14,7 @@ permissions:
 
 env:
   ENV_FILE: ".env"
+  IS_PULL_REQUEST: ${{ (github.event_name == 'pull_request') || (inputs.environment == 'dev') }}
 
 jobs:
   deploy:
@@ -48,3 +49,10 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true 
+
+      - name: "Connectivity Resource Group Deployment"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZConnectivityResourceGroup.ps1
+          azPSVersion: "latest"
