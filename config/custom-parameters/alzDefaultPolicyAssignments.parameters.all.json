@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLogAnalyticsWorkSpaceAndAutomationAccountLocation": {
+        "value": "westeurope"
+    },
+    "parLogAnalyticsWorkspaceResourceId": {
+        "value": "/subscriptions/292a5fa7-95ff-463c-ae16-801679db5563/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
+    },
+    "parLogAnalyticsWorkspaceLogRetentionInDays": {
+        "value": "30"
+    },
+    "parAutomationAccountName": {
+        "value": "alz-automation-account"
+    },
+    "parMsDefenderForCloudEmailSecurityContact": {
+        "value": "security@mail.com"
+    },
+    "parPrivateDnsResourceGroupId": {
+        "value": "/subscriptions/320700d2-f56a-461e-99bd-813cae891709/resourceGroups/alz-connectivity"
+    },
+    "parDisableAlzDefaultPolicies": {
+        "value": false
+    },
+    "parTelemetryOptOut": {
+        "value": false
+    }
+  }
+}

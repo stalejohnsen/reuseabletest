@@ -1,4 +1,4 @@
-name: ALZ-Bicep-1-Core
+name: ALZ-Bicep-2-PolicyAssignments
 
 on:
   workflow_call:
@@ -20,7 +20,7 @@ env:
   TOP_LEVEL_MG_DISPLAYNAME: ${{ vars.TOP_LEVEL_MG_DISPLAYNAME }}
 
 jobs:
-  ALZ_Bicep_1_Core:
+  ALZ_Bicep_2_PolicyAssignments:
     name: Deploy to ${{ inputs.environment }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
@@ -64,23 +64,17 @@ jobs:
           VALIDATE_EDITORCONFIG: true
           FILTER_REGEX_EXCLUDE: ".*generateddocs/.*.bicep.md"     
 
-      - name: "Management Groups Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZManagementGroups.ps1
-          azPSVersion: "latest"
+      # Example: Modify Deploy-ALZRoleAssignments.ps1 with applicable pararameter file and uncomment lines below to enable Role Assignments Deployment.
+      # - name: "Role Assignments Deployment"
+      #   uses: azure/powershell@v1
+      #   with:
+      #     inlineScript: |
+      #       .\pipeline-scripts\Deploy-ALZRoleAssignments.ps1
+      #     azPSVersion: "latest"
 
-      - name: "Custom Policy Definitions Deployment"
+      - name: "Built-in and Custom Policy Assignments Deployment"
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            .\pipeline-scripts\Deploy-ALZCustomPolicyDefinitions.ps1
-          azPSVersion: "latest"
-
-      - name: "Custom Role Definitions Deployment"
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            .\pipeline-scripts\Deploy-ALZCustomRoleDefinitions.ps1
+            .\pipeline-scripts\Deploy-ALZPolicyAssignments.ps1
           azPSVersion: "latest"
