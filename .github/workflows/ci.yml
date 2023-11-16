@@ -1,0 +1,19 @@
+name: Azure Landing Zone Continuous Integration
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy_preflight:
+    name: Deploy preflight
+    uses: ./.github/workflows/reuse.yml
+    with:
+      environment: dev
