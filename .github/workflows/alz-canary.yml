@@ -1,4 +1,4 @@
-name: Azure Landing Zone Canary
+name: Azure Landing Zone Canary Deployment
 on:
   push:
     branches-ignore:

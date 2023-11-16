@@ -1,4 +1,4 @@
-name: Azure Landing Zone Live
+name: Azure Landing Zone Live Deployment
 on:
   push:
     branches:
