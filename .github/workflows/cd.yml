@@ -13,6 +13,6 @@ jobs:
   deploy_prod:
     if: 
     name: Deploy to Prod
-    uses: ./.github/workflows/reuse.yml
+    uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
       environment: prod

@@ -16,15 +16,15 @@ permissions:
 
 jobs:
   deploy_preflight:
+    if: github.event_name == 'pull_request'
     name: Deploy preflight
-    uses: ./.github/workflows/reuse.yml
+    uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
       environment: dev
 
   deploy_canary:
     if: github.event_name != 'pull_request'
     name: Deploy Canary
-    needs: deploy_preflight
-    uses: ./.github/workflows/reuse.yml
+    uses: ./.github/workflows/alz-bicep-1-core.yml
     with:
       environment: canary
