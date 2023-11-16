@@ -12,6 +12,9 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  ENV_FILE: ".env"
+
 jobs:
   deploy:
     name: Deploy to ${{ inputs.environment }}
