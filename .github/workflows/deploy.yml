@@ -2,6 +2,7 @@ name: Calling Workflow
 
 on:
   workflow_dispatch:
+  pull_request:
 
 permissions:
   id-token: write
@@ -9,6 +10,7 @@ permissions:
 
 jobs:
   deploy_dev:
+    if: github.event_name == 'pull_request'
     name: Deploy to Dev
     uses: ./.github/workflows/reuse.yml
     with:
@@ -17,5 +19,6 @@ jobs:
   deploy_prod:
     name: Deploy to Prod
     uses: ./.github/workflows/reuse.yml
+    needs: deploy_dev
     with:
       environment: prod

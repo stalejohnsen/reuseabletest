@@ -14,7 +14,7 @@ permissions:
 
 env:
   ENV_FILE: ".env"
-  IS_PULL_REQUEST: ${{ (github.event_name == 'pull_request') || (inputs.environment == 'dev') }}
+  IS_PULL_REQUEST: ${{ (inputs.environment == 'dev') }}
 
 jobs:
   deploy:
@@ -38,9 +38,6 @@ jobs:
 
       - name: Import Environment Variables from File
         run: cat ${{ env.ENV_FILE }} >> $GITHUB_ENV
-
-      - name: Set up environment variable
-        run: echo "WHAT_IF=${{ inputs.environment == 'dev' }}" >> $GITHUB_ENV
 
       - name: OIDC Login to Tenant
         uses: azure/login@v1
