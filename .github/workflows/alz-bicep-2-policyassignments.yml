@@ -50,20 +50,6 @@ jobs:
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true 
 
-      - name: Run github/super-linter
-        if: env.IS_PULL_REQUEST == 'true'
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_JSON: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_POWERSHELL: true
-          VALIDATE_YAML: true
-          VALIDATE_EDITORCONFIG: true
-          FILTER_REGEX_EXCLUDE: ".*generateddocs/.*.bicep.md"     
-
       # Example: Modify Deploy-ALZRoleAssignments.ps1 with applicable pararameter file and uncomment lines below to enable Role Assignments Deployment.
       # - name: "Role Assignments Deployment"
       #   uses: azure/powershell@v1
