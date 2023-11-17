@@ -25,7 +25,7 @@ jobs:
     if: github.event_name == 'pull_request'
     name: Preflight validation
     needs: alz-bicep-1-core_canary
-    uses: ./.github/workflows/reuse/reuse-hubspoke.yml
+    uses: ./.github/workflows/reuse-hubspoke.yml
     with:
       environment: dev
 
@@ -33,6 +33,6 @@ jobs:
     name: Deploy to ALZ live
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: deploy_preflight
-    uses: ./.github/workflows/reuse/reuse-hubspoke.yml
+    uses: ./.github/workflows/reuse-hubspoke.yml
     with:
       environment: prod
