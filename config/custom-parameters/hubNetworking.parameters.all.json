@@ -161,8 +161,7 @@
     },
     "parTags": {
       "value": {
-        "Environment": "POC",
-        "Owner": "Azure Networking"
+        "Environment": "POC"
       }
     },
     "parTelemetryOptOut": {
