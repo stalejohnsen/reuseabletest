@@ -57,6 +57,22 @@ jobs:
             .\pipeline-scripts\Deploy-ALZManagementGroups.ps1
           azPSVersion: "latest"
 
+      - name: "Logging and Sentinel Resource Group Deployment"
+        if: ${{ inputs.environment == 'dev' || inputs.environment == 'prod'}}
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinelResourceGroup.ps1
+          azPSVersion: "latest"
+
+      - name: "Logging and Sentinel Deployment"
+        if: ${{ inputs.environment == 'dev' || inputs.environment == 'prod'}}
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .\pipeline-scripts\Deploy-ALZLoggingAndSentinel.ps1
+          azPSVersion: "latest"
+
       - name: "Custom Policy Definitions Deployment"
         uses: azure/powershell@v1
         with:

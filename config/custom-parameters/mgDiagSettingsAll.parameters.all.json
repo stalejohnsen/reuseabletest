@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parLandingZoneMgAlzDefaultsEnable": {
+      "value": true
+    },
+    "parLandingZoneMgConfidentialEnable": {
+      "value": false
+    },
+    "parLogAnalyticsWorkspaceResourceId": {
+      "value": "/subscriptions/292a5fa7-95ff-463c-ae16-801679db5563/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
+    },
+    "parLandingZoneMgChildren": {
+      "value": []
+    },
+    "parTelemetryOptOut": {
+      "value": false
+    }
+  }
+}
