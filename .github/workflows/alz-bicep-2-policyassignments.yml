@@ -18,7 +18,7 @@ jobs:
   alz-bicep-1-core_preflight:
     name: ALZ-Bicep-1-Core - Preflight
     if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
-    uses: ./.github/workflows/reuse-core.yml
+    uses: ./.github/workflows/reuse/reuse-core.yml
     with:
       environment: canary-preflight
 
@@ -26,7 +26,7 @@ jobs:
     name: ALZ-Bicep-1-Core - ALZ Canary
     if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
     needs: alz-bicep-1-core_preflight
-    uses: ./.github/workflows/reuse-core.yml
+    uses: ./.github/workflows/reuse/reuse-core.yml
     with:
       environment: canary
 
@@ -34,7 +34,7 @@ jobs:
     if: github.event_name == 'pull_request'
     name: Preflight validation
     needs: alz-bicep-1-core_canary
-    uses: ./.github/workflows/reuse-core.yml
+    uses: ./.github/workflows/reuse/reuse-core.yml
     with:
       environment: dev
 
@@ -42,6 +42,6 @@ jobs:
     name: Deploy to ALZ live
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: deploy_preflight
-    uses: ./.github/workflows/reuse-core.yml
+    uses: ./.github/workflows/reuse/reuse-core.yml
     with:
       environment: prod
