@@ -36,7 +36,6 @@ jobs:
   policyassignment_live_preflight:
     if: github.event_name == 'pull_request'
     name: PolicyAssignments - Preflight ALZ Live
-    needs: policyassignments_canary_deploy
     uses: ./.github/workflows/reuse-policyassignments.yml
     with:
       environment: dev

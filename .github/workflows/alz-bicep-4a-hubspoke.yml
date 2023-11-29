@@ -33,6 +33,7 @@ jobs:
   hubspoke_live:
     name: HubSpoke - Deploy ALZ Live
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: hubspoke_preflight
     uses: ./.github/workflows/reuse-hubspoke.yml
     with:
       environment: prod
