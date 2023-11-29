@@ -22,6 +22,7 @@ env:
 
 jobs:
   ALZ_Bicep_3_SubPlacement:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

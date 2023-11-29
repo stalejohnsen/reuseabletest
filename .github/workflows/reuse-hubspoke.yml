@@ -21,6 +21,7 @@ env:
   
 jobs:
   ALZ_Bicep_4a_HubSpoke:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
