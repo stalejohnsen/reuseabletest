@@ -27,6 +27,7 @@ jobs:
 
   subplacement_live:
     name: Subplacement - Deploy ALZ Live
+    needs: subplacement_preflight
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/reuse-subplacement.yml
     with:
