@@ -3,11 +3,13 @@ on:
   push:
     paths:
       - alzDefaultPolicyAssignments.parameters.all.json
+      - ".env"
   pull_request:
     branches:
       - "main"
     paths:
       - alzDefaultPolicyAssignments.parameters.all.json
+      - ".env"
   workflow_dispatch:  
 
 permissions:

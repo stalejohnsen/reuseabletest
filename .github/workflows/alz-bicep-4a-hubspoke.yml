@@ -7,12 +7,14 @@ on:
     paths:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
+      - ".env"
   pull_request:
     branches:
       - "main"
     paths:
       - "config/custom-parameters/resourceGroupConnectivity.parameters.all.json"
       - "config/custom-parameters/hubNetworking.parameters.all.json"
+      - ".env"
   workflow_dispatch:
 
 permissions:

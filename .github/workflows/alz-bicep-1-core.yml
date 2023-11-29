@@ -8,6 +8,7 @@ on:
       - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
       - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
       - "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
+      - ".env"
   pull_request:
     branches:
       - "main"
@@ -18,6 +19,7 @@ on:
       - "config/custom-parameters/customPolicyDefinitions.parameters.all.json"
       - "config/custom-parameters/customRoleDefinitions.parameters.all.json"
       - "config/custom-parameters/mgDiagSettingsAll.parameters.all.json"
+      - ".env"
   workflow_dispatch:  
 
 permissions:

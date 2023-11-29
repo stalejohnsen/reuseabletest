@@ -6,11 +6,13 @@ on:
       - "main"
     paths:
       - "config/custom-parameters/subPlacementAll.parameters.all.json"
+      - ".env"
   pull_request:
     branches:
       - "main"
     paths:
       - "config/custom-parameters/subPlacementAll.parameters.all.json"
+      - ".env"
   workflow_dispatch:
 
 permissions:
