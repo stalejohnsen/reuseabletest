@@ -22,13 +22,13 @@ permissions:
 jobs:
   hubspoke_preflight:
     if: github.event_name == 'pull_request'
-    name: Preflight validation
+    name: HubSpoke - Preflight ALZ Live
     uses: ./.github/workflows/reuse-hubspoke.yml
     with:
       environment: dev
 
-  hubspoke_prod:
-    name: Deploy to ALZ live
+  hubspoke_live:
+    name: HubSpoke - Deploy ALZ Live
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/reuse-hubspoke.yml
     with:

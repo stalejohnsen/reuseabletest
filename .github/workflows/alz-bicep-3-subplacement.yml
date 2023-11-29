@@ -20,13 +20,14 @@ permissions:
 jobs:
   subplacement_preflight:
     if: github.event_name == 'pull_request'
-    name: Preflight validation
+    name: Subplacement - Preflight ALZ Live
     uses: ./.github/workflows/reuse-subplacement.yml
     with:
       environment: dev
 
-  subplacement_prod:
-    name: Deploy to ALZ live
+  subplacement_live:
+    name: Subplacement - Deploy ALZ Live
+    needs: subplacement_preflight
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/reuse-subplacement.yml
     with:
